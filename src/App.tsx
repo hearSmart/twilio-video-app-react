@@ -10,6 +10,7 @@ import Room from './components/Room/Room';
 
 import useHeight from './hooks/useHeight/useHeight';
 import useRoomState from './hooks/useRoomState/useRoomState';
+import PreJoinScreensDeviceLanding from './components/PreJoinScreens/PreJoinScreensDeviceLanding';
 
 const Container = styled('div')({
   display: 'grid',
@@ -38,7 +39,7 @@ export default function App() {
   return (
     <Container style={{ height }}>
       {roomState === 'disconnected' ? (
-        <PreJoinScreens />
+        <PreJoinScreensDeviceLanding />
       ) : (
         <Main>
           <ReconnectingNotification />

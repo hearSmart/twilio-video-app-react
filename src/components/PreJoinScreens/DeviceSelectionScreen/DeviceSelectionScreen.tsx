@@ -71,11 +71,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface DeviceSelectionScreenProps {
   name: string;
+  token?: string;
   roomName: string;
   setStep: (step: Steps) => void;
 }
 
-export default function DeviceSelectionScreen({ name, roomName, setStep }: DeviceSelectionScreenProps) {
+export default function DeviceSelectionScreen({ name, roomName, token, setStep }: DeviceSelectionScreenProps) {
   const classes = useStyles();
   const { getToken, isFetching, isKrispEnabled, isKrispInstalled } = useAppState();
   const { connect: chatConnect } = useChatContext();
@@ -84,6 +85,11 @@ export default function DeviceSelectionScreen({ name, roomName, setStep }: Devic
   const disableButtons = isFetching || isAcquiringLocalTracks || isConnecting;
 
   const handleJoin = () => {
+    if (token) {
+      videoConnect(token);
+      return;
+    }
+
     getToken(name, roomName).then(({ token }) => {
       videoConnect(token);
       process.env.REACT_APP_DISABLE_TWILIO_CONVERSATIONS !== 'true' && chatConnect(token);
